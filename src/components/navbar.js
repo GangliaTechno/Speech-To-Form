@@ -2,71 +2,71 @@ import React from "react";
 
 const Navbar = () => {
   return (
-    <nav className="bg-gray-800 py-8">
-      <div className="container mx-auto  flex justify-center font-bold items-center">
-        <div className="text-white font-bold text-lg"></div>
-        <ul className="flex space-x-8">
-          <li>
+    <nav className=" bg-gray-800 py-8">
+      <div className="container mx-auto  justify-center md:justify-center  font-bold ">
+        <div className="text-white font-bold text-lg "></div>
+        <ul className="block sm:flex  md:flex  xl:flex space-x-8  ">
+          <li className="my-4 sm:my-0">
             <a href="#" className="text-white">
               Transfer in
             </a>
           </li>
-          <li>
+          <li  className="my-4 sm:my-0">
             <a href="#" className="text-white">
               Triage
             </a>
           </li>
-          <li>
+          <li  className="my-4 sm:my-0">
             <a href="#" className="text-white">
               Treatment
             </a>
           </li>
-          <li>
+          <li  className="my-4 sm:my-0">
             <a href="#" className="text-white">
               Airway Management
             </a>
           </li>
-          <li>
+          <li  className="my-4 sm:my-0">
             <a href="#" className="text-white">
               Breathing and Ventilation
             </a>
           </li>
-          <li>
+          <li  className="my-4 sm:my-0">
             <a href="#" className="text-white">
               Circualtion
             </a>
           </li>
-          <li>
+          <li  className="my-4 sm:my-0">
             <a href="#" className="text-white">
               Tests
             </a>
           </li>
-          <li>
+          <li  className="my-4 sm:my-0">
             <a href="#" className="text-white">
               Transactions
             </a>
           </li>
-          <li>
+          <li  className="my-4 sm:my-0">
             <a href="#" className="text-white">
               Transfer Out
             </a>
           </li>
-          <li>
+          <li  className="my-4 sm:my-0">
             <a href="#" className="text-white">
               Teams
             </a>
           </li>
-          <li>
+          <li  className="my-4 sm:my-0">
             <a href="#" className="text-white">
               Task Checklist
             </a>
           </li>
-          <li>
+          <li  className="my-4 sm:my-0">
             <a href="#" className="text-white">
               Treatments
             </a>
           </li>
-          <li>
+          <li  className="my-4 sm:my-0">
             <a href="#" className="text-white">
               Traking
             </a>
