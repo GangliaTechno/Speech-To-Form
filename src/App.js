@@ -1,5 +1,5 @@
 import "./App.css";
-import InputForm from "./components/input";
+import TriageForm from "./components/triage";
 import Navbar from "./components/navbar";
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
           Nurse Triage{" "}
         </h1>
       </div>
-      <InputForm />
+      <TriageForm/>
     </div>
   );
 }
