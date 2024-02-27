@@ -2,7 +2,10 @@ import React from 'react';
 
 
 const TriageForm = () => {
-  let stopRecording = false;
+  // let stopRecording = false;
+
+  let stopRecording =false;
+
   const handleStartRecording = (section) => {
     // Set the section property
     console.log('Section:', section);
@@ -12,18 +15,20 @@ const TriageForm = () => {
   };
 
 
-  const handleStopRecording = () => {
+  const handleStopRecording = (section_stop) => {
+    stopRecording=true;
     fetch('http://localhost:5000/stop_recording', {
       method: 'GET'
     })
     .then(response => response.json())
     .then(data => {
       console.log("Received response from backend:", data);
-      stopRecording = true;
       console.log("received response from stop recodirng");
 
       const geminiResponse = data.gemini_response;
       if (geminiResponse) {
+
+        if(section_stop===5){
 
           const triageid_html = document.getElementById('triageid');
           const namegivenatTriage_html = document.getElementById('namegivenatTriage');
@@ -43,7 +48,56 @@ const TriageForm = () => {
           maritialStatus_html.selectedIndex = parseInt(geminiResponse["Maritial_Status"])+1;
           address_html.value = geminiResponse["Address"];
           gender_html.selectedIndex = parseInt(geminiResponse["Gender"])+1;
-      } else {
+      }
+      else if (section_stop===6){
+        const triage_date_html = document.getElementById('triage_date');
+        const triageTime_html = document.getElementById('triageTime');
+        const chiefCompliant_html = document.getElementById('chiefCompliant');
+        const duration_html = document.getElementById('duration');
+        const nurseSendTo_html = document.getElementById('nurseSendTo');
+        const emergencySecurityIndex_html = document.getElementById('emergencySecurityIndex');
+        const nurseRemarks_html = document.getElementById('nurseRemarks');
+        const visitortag_html = document.getElementById('visitortag');
+        const registrationDesk_html = document.getElementById('registrationDesk');
+        const triageNurseDetails_html = document.getElementById('triageNurseDetails');
+
+        triage_date_html.value = geminiResponse["Triage_date"];
+        triageTime_html.value = geminiResponse["Triage_time"];
+        chiefCompliant_html.value = geminiResponse["Cheif_presenting_complaint"];
+        duration_html.value = parseInt(geminiResponse["Duration_of_symptoms_in_Days"]);
+        nurseSendTo_html.selectedIndex = parseInt(geminiResponse["Nurse_Send_to"]+1);
+        emergencySecurityIndex_html.selectedIndex = parseInt(geminiResponse["Emergency_Security_Index_Trialge_Nurse"])+1;
+        nurseRemarks_html.value = geminiResponse["Remarks_on_Nurse_Triage"];
+        visitortag_html.selectedIndex = parseInt(geminiResponse["Visitor_id_tag_provided"])+1;
+        registrationDesk_html.selectedIndex = parseInt(geminiResponse["Register_desk_activated"])+1;
+        triageNurseDetails_html.value = geminiResponse["Triage_nurse_Details"];
+      }
+       else if(section_stop===7){
+        const physicalDate_html = document.getElementById('physicalDate');
+        const Physicaltime_html = document.getElementById('Physicaltime');
+        const emergencyPhysicianTriage_html = document.getElementById('emergencyPhysicianTriage');
+        const EMConcurence_html = document.getElementById('EMConcurence');
+        const PhysicianAdmission_html = document.getElementById('PhysicianAdmission');
+        const emergencySecurityIndexPhysician_html = document.getElementById('emergencySecurityIndexPhysician');
+        const remarksforTriage_html = document.getElementById('remarksforTriage');
+        const Majorclassification_html = document.getElementById('Majorclassification');
+        const medicalogicalcase_html = document.getElementById('medicalogicalcase');
+
+        physicalDate_html.value = geminiResponse["Physical_Triage_date"];
+        Physicaltime_html.value = geminiResponse["Physical_Triage_time"];
+        emergencyPhysicianTriage_html.selectedIndex = parseInt(geminiResponse["Emergency_Physician_Triage"])+1;
+        EMConcurence_html.selectedIndex = parseInt(geminiResponse["EM_Physician_Concurence_with_nurse_triage"])+1;
+        PhysicianAdmission_html.selectedIndex = parseInt(geminiResponse["Physician_Admission"])+1;
+        emergencySecurityIndexPhysician_html.selectedIndex = parseInt(geminiResponse["Emergency_severity_index_physician_Triage"])+1;
+        remarksforTriage_html.value = geminiResponse["Remarks_for_Triage"];
+        Majorclassification_html.selectedIndex =parseInt(geminiResponse["Major_classification_of_case"])+1;
+        medicalogicalcase_html.selectedIndex = parseInt(geminiResponse["medicalogical_case"])+1;
+        
+      }
+
+     }
+      
+      else {
         console.log("Not received the response");
       }
     })
@@ -63,7 +117,7 @@ const TriageForm = () => {
     .then(data => {
       console.log(data);
 
-      stopRecording = false;
+      stopRecording=false;
     })
     .catch(error => console.error('Error starting recording:', error));
   };
@@ -120,18 +174,7 @@ const TriageForm = () => {
             <option value="other">Other</option>
           </select>
         </div>
-          {/* <div className="mb-4">
-            <label htmlFor="gender" className="flex text-gray-700 text-sm font-bold mb-2 w-60">
-              Gender
-            </label>
-            <select id="gender" className="block appearance-none w-32 bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:border-blue-500">
-            <option value="selectoption">Select Option</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="transgender">Transgender</option>
-            <option value="other">Other</option> 
-          </select>
-          </div> */}
+
         </div>
         <div className=" inline-block sm:flex md:flex xl:flex justify-start max-w-md pl-14 space-x-12 pt-8 ">
           <div className="mb-4">
@@ -171,6 +214,7 @@ const TriageForm = () => {
             <textarea
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               rows="3"
+              id='address'
             />
           </div>
         </div>
@@ -178,7 +222,7 @@ const TriageForm = () => {
           <button id="startRecordingButton5" onClick={() => handleStartRecording(5)} className="w-40 h-14 bg-blue-500 rounded-2xl mr-4">
             Start Recording
           </button>
-          <button id="stopRecordingButton" onClick={handleStopRecording} className="w-40 h-14 bg-orange-400 rounded-2xl">
+          <button id="stopRecordingButton5" onClick={handleStopRecording(5)} className="w-40 h-14 bg-orange-400 rounded-2xl">
             Stop Recording
           </button>
         </div>
@@ -186,38 +230,41 @@ const TriageForm = () => {
       <div className="border-b-4 h-auto pb-4">
         <div className="block sm:flex md:flex xl:flex justify-start max-w-md pl-6 space-x-12 pt-8 ml-9">
           <div className="mb-4 ">
-            <label className=" text-gray-700 text-sm font-bold mb-2 w-36  sm:w-56  sm:flex">
+            <label htmlFor='triage_date' className=" text-gray-700 text-sm font-bold mb-2 w-36  sm:w-56  sm:flex">
               Triage Date
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              //   id="name"
+                id="triage_date"
                 type="date"
               //   name="name"
             />
           </div>
           <div className="mb-4 ">
-            <label className=" text-gray-700 text-sm font-bold mb-2 w-36  sm:w-56  sm:flex">
+            <label htmlFor='triageTime' className=" text-gray-700 text-sm font-bold mb-2 w-36  sm:w-56  sm:flex">
               Triage Time
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              //   id="name"
+                id="triageTime"
                 type="time"
               //   name="name"
             />
           </div>
           <div className="mb-4">
-            <label className="flex text-gray-700 text-sm font-bold mb-2 w-96">
+            <label htmlFor='chiefCompliant' className="flex text-gray-700 text-sm font-bold mb-2 w-96">
               Cheif presenting complaint
             </label>
-            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline space-x-20" />
+            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline space-x-20"
+            id='chiefCompliant'
+            />
           </div>
           <div className="mb-4">
-            <label className="flex text-gray-700 text-sm font-bold mb-2 w-96">
+            <label htmlFor='duration' className="flex text-gray-700 text-sm font-bold mb-2 w-96">
               Duration of symptoms in Days
             </label>
-            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            <input id='duration'
+             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="number"
             />
           </div>
@@ -254,12 +301,13 @@ const TriageForm = () => {
         </div>
 
           <div className="mb-4">
-            <label className="flex text-gray-700 text-sm font-bold mb-2 w-96 ">
+            <label htmlFor='nurseRemarks' className="flex text-gray-700 text-sm font-bold mb-2 w-96 ">
               Remarks on Nurse Triage
             </label>
             <textarea
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               rows="4"
+              id='nurseRemarks'
             />
           </div>
           <div className="mb-4 ">
@@ -287,17 +335,18 @@ const TriageForm = () => {
 
         <div className=" inline-block sm:flex md:flex xl:flex justify-start  pl-14 space-x-12 pt-8 ">
           <div className="mb-4">
-            <label className="flex text-gray-700 text-sm font-bold mb-2">
+            <label htmlFor='triageNurseDetails' className="flex text-gray-700 text-sm font-bold mb-2">
               Triage nurse Details
             </label>
-            <input className=" shadow appearance-none border rounded   w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+            <input id='triageNurseDetails'
+             className=" shadow appearance-none border rounded   w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
           </div>
         </div>
         <div className="button flex justify-center  pt-2 text-sm font-bold  pl-9 ">
-          <button id="startRecordingButton5" onClick={() => handleStartRecording(6)} className="w-40 h-14 bg-blue-500 rounded-2xl mr-4">
+          <button id="startRecordingButton6" onClick={() => handleStartRecording(6)} className="w-40 h-14 bg-blue-500 rounded-2xl mr-4">
             Start Recording
           </button>
-          <button id="stopRecordingButton" onClick={handleStopRecording} className="w-40 h-14 bg-orange-400 rounded-2xl">
+          <button id="stopRecordingButton6" onClick={handleStopRecording(6)} className="w-40 h-14 bg-orange-400 rounded-2xl">
             Stop Recording
           </button>
         </div>
@@ -310,23 +359,23 @@ const TriageForm = () => {
         </h1>
         <div className="block sm:flex md:flex xl:flex justify-start max-w-md pl-6 space-x-12 pt-8 ml-9">
         <div className="mb-4 ">
-            <label className=" text-gray-700 text-sm font-bold mb-2 w-36  sm:w-56  sm:flex">
+            <label htmlFor='physicalDate' className=" text-gray-700 text-sm font-bold mb-2 w-36  sm:w-56  sm:flex">
              Physical Triage Date
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              //   id="name"
+                id="physicalDate"
                 type="date"
               //   name="name"
             />
           </div>
           <div className="mb-4 ">
-            <label className=" text-gray-700 text-sm font-bold mb-2 w-36  sm:w-56  sm:flex">
+            <label htmlFor='Physicaltime' className=" text-gray-700 text-sm font-bold mb-2 w-36  sm:w-56  sm:flex">
              Physical Triage Time
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              //   id="name"
+                id="Physicaltime"
                 type="time"
               //   name="name"
             />
@@ -391,10 +440,11 @@ const TriageForm = () => {
         </div>
           
           <div className="mb-4">
-            <label className="flex text-gray-700 text-sm font-bold mb-2 w-96 ">
+            <label htmlFor='remarksforTriage' className="flex text-gray-700 text-sm font-bold mb-2 w-96 ">
               Remarks for Triage
             </label>
             <textarea
+              id='remarksforTriage'
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               rows="4"
             />
@@ -426,10 +476,10 @@ const TriageForm = () => {
         </div>
 
         <div className="button flex justify-center  pt-2 text-sm font-bold  pl-9 ">
-          <button  className="w-40 h-14 bg-blue-500 rounded-2xl mr-4">
+          <button id="startRecordingButton7" onClick={() => handleStartRecording(7)} className="w-40 h-14 bg-blue-500 rounded-2xl mr-4">
             Start Recording
           </button>
-          <button className="w-40 h-14 bg-orange-400 rounded-2xl">
+          <button id="stopRecordingButton7" onClick={handleStopRecording(7)} className="w-40 h-14 bg-orange-400 rounded-2xl">
             Stop Recording
           </button>
         </div>

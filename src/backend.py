@@ -10,6 +10,7 @@ import re
 # Configure Flask app
 app = Flask(__name__)
 CORS(app)
+
 # Configure generative AI model
 genai.configure(api_key="AIzaSyAFER-GEGVy5Cw9E-vkCIjyjvW-Bc4pBZ8")
 generation_config = {"temperature": 0.9, "top_p": 1, "top_k": 1, "max_output_tokens": 2048}
@@ -207,6 +208,67 @@ def run_async_task(stop_flag):
                 ```
             """+f"""
             Here is the recorded text: {audio_text}"""
+            
+    elif additional_variable==6:
+         prompt="""Please provide the information ignoring all other information from the recorded text.
+            1)Triage_date(in yyyy-MM-dd format only), 2) Triage_time,
+            3)Cheif_presenting_complaint,
+            4)Duration_of_symptoms_in_Days,
+            5)Nurse_Send_to[blue area:priority1(0),red area:priority2(1),yellow area:priority3(2),green area:priority4(3),edcrit(4),ed office(5) give index number only], 
+            6)Emergency_Security_Index_Trialge_Nurse[patient dying:priority1(0),cannot wait:priority2(1),needs multiple resources:priority3(2),needs single resource:priority4(3),needs no resource:priority5(3)(4),brought dead(5) give index number only],
+            7)Remarks_on_Nurse_Triage,
+            8)Visitor_id_tag_provided([yes(0),no(1) give index number only]),
+            9)Register_desk_activated([yes(0),no(1) give index number only]),
+            10)Triage_nurse_Details.
+            Don't add any comment or any unnecessary information. Give response in JSON format. 
+            This is an example for your reference:
+            Gemini API Response: 
+            ```
+                {
+                "Triage_date": "2024-02-20",
+                "Triage_time": "16:14",
+                "Cheif_presenting_complaint": "1.Compliant one \n2.Compliant two",
+                "Duration_of_symptoms_in_Days": "7",
+                "Nurse_Send_to": "3",
+                "Emergency_Security_Index_Trialge_Nurse": "4",
+                "Remarks_on_Nurse_Triage": "I was good anyways...",
+                "Visitor_id_tag_provided": "1",
+                "Register_desk_activated": "0",
+                "Triage_nurse_Details": "Name - Maharani, Department - medical"
+                }
+                ```
+            """+f"""
+            Here is the recorded text: {audio_text}"""
+            
+    elif additional_variable==7:
+        prompt="""Please provide the information ignoring all other information from the recorded text.
+            1)Physical_Triage_date(in yyyy-MM-dd format only), 2) Physical_Triage_time,
+            3)Emergency_Physician_Triage[patient dying:priority1(0),cannot wait:priority2(1),needs multiple resources:priority3(2),needs single resource:priority4(3),needs no resource:priority5(3)(4)] give index number only)",
+            4)EM_Physician_Concurence_with_nurse_triage([yes(0),no(1) give index number only]),
+            5)Physician_Admission(blue area:priority1(0),red area:priority2(1),yellow area:priority3(2),green area:priority4(3),edcrit(4),ed office(5),isolation(6),morque(7)] give index number only), 
+            6)Emergency_severity_index_physician_Triage[patient dying:priority1(0),cannot wait:priority2(1),needs multiple resources:priority3(2),needs single resource:priority4(3),needs no resource:priority5(3)(4),brought dead(5)] give index number only),
+            7)Remarks_for_Triage,
+            8)Major_classification_of_case([trauma(0),non-rauma(1),trauma_plus_with_medical_condition(2),neonatal(3),pediatric(4),obstertic(5)] give index number only),
+            9)medicalogical_case([yes(0),no(1) give index number only]).
+            Don't add any comment or any unnecessary information. Give response in JSON format. 
+            This is an example for your reference:
+            Gemini API Response: 
+            ```
+                {
+                "Physical_Triage_date": "2024-02-20",
+                "Physical_Triage_time": "16:14",
+                "Emergency_Physician_Triage": "2",
+                "EM_Physician_Concurence_with_nurse_triage": "1",
+                "Physician_Admission": "3",
+                "Emergency_severity_index_physician_Triage": "3",
+                "Remarks_for_Triage": "No remarks at all",
+                "Major_classification_of_case": "3",
+                "medicalogical_case": "0"
+                }
+                ```
+            """+f"""
+            Here is the recorded text: {audio_text}"""
+        
 
     gemini_model_response = gemini_model_api_request(prompt)
 
