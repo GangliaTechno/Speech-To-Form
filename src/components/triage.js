@@ -1,30 +1,28 @@
-import React from 'react';
+import React,{useState} from 'react';
 
 
 const TriageForm = () => {
   // let stopRecording = false;
 
-  let stopRecording =false;
+  const [stopRecording, setStopRecording] = useState(false);
 
-  const handleStartRecording = (section) => {
+  const handleStartRecording = async (section) => {
     // Set the section property
     console.log('Section:', section);
 
     // Call the function to send data to backend
-    sendDataToBackend(section);
+    await sendDataToBackend(section);
   };
 
 
-  const handleStopRecording = (section_stop) => {
-    stopRecording=true;
-    fetch('http://localhost:5000/stop_recording', {
-      method: 'GET'
-    })
-    .then(response => response.json())
-    .then(data => {
+  const handleStopRecording = async (section_stop) => {
+    setStopRecording(true);
+    try{
+      const response = await fetch('http://localhost:5000/stop_recording');
+      const data = await response.json();
       console.log("Received response from backend:", data);
-      console.log("received response from stop recodirng");
-
+      console.log("Received response from stop recording");
+  
       const geminiResponse = data.gemini_response;
       if (geminiResponse) {
 
@@ -100,26 +98,26 @@ const TriageForm = () => {
       else {
         console.log("Not received the response");
       }
-    })
-    .catch(error => console.error('Error stopping recording:', error));
+  }catch(error){
+    console.log(error);
+  }
   };
 
-  const sendDataToBackend = (section) => {
-    // Send data to backend
-    fetch('http://localhost:5000/start_recording', { 
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ additional_variable: section })
-    })
-    .then(response => response.json())
-    .then(data => {
+  const sendDataToBackend = async (section) => {
+    try {
+      const response = await fetch('http://localhost:5000/start_recording', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ additional_variable: section })
+      });
+      const data = await response.json();
       console.log(data);
-
-      stopRecording=false;
-    })
-    .catch(error => console.error('Error starting recording:', error));
+      stopRecording = false;
+    } catch (error) {
+      console.error('Error starting recording:', error);
+    }
   };
 
   return (
@@ -222,9 +220,9 @@ const TriageForm = () => {
           <button id="startRecordingButton5" onClick={() => handleStartRecording(5)} className="w-40 h-14 bg-blue-500 rounded-2xl mr-4">
             Start Recording
           </button>
-          <button id="stopRecordingButton5" onClick={handleStopRecording(5)} className="w-40 h-14 bg-orange-400 rounded-2xl">
-            Stop Recording
-          </button>
+          <button id="stopRecordingButton5" onClick={() => handleStopRecording(5)} className="w-40 h-14 bg-orange-400 rounded-2xl">
+          Stop Recording
+        </button>
         </div>
       </div>
       <div className="border-b-4 h-auto pb-4">
@@ -342,14 +340,15 @@ const TriageForm = () => {
              className=" shadow appearance-none border rounded   w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
           </div>
         </div>
-        <div className="button flex justify-center  pt-2 text-sm font-bold  pl-9 ">
-          <button id="startRecordingButton6" onClick={() => handleStartRecording(6)} className="w-40 h-14 bg-blue-500 rounded-2xl mr-4">
-            Start Recording
-          </button>
-          <button id="stopRecordingButton6" onClick={handleStopRecording(6)} className="w-40 h-14 bg-orange-400 rounded-2xl">
-            Stop Recording
-          </button>
-        </div>
+        <div className="button flex justify-center pt-2 text-sm font-bold pl-9">
+  <button id="startRecordingButton5" onClick={() => handleStartRecording(6)} className="w-40 h-14 bg-blue-500 rounded-2xl mr-4">
+    Start Recording
+  </button>
+  <button id="stopRecordingButton5" onClick={() => handleStopRecording(6)} className="w-40 h-14 bg-orange-400 rounded-2xl">
+    Stop Recording
+  </button>
+</div>
+
       </div>
 
       <div className="border-b-4 h-auto pb-4">
@@ -475,14 +474,15 @@ const TriageForm = () => {
            </div>
         </div>
 
-        <div className="button flex justify-center  pt-2 text-sm font-bold  pl-9 ">
-          <button id="startRecordingButton7" onClick={() => handleStartRecording(7)} className="w-40 h-14 bg-blue-500 rounded-2xl mr-4">
-            Start Recording
-          </button>
-          <button id="stopRecordingButton7" onClick={handleStopRecording(7)} className="w-40 h-14 bg-orange-400 rounded-2xl">
-            Stop Recording
-          </button>
-        </div>
+        <div className="button flex justify-center pt-2 text-sm font-bold pl-9">
+  <button id="startRecordingButton5" onClick={() => handleStartRecording(7)} className="w-40 h-14 bg-blue-500 rounded-2xl mr-4">
+    Start Recording
+  </button>
+  <button id="stopRecordingButton5" onClick={() => handleStopRecording(7)} className="w-40 h-14 bg-orange-400 rounded-2xl">
+    Stop Recording
+  </button>
+</div>
+
       </div>
     </div>
   );

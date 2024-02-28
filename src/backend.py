@@ -1,3 +1,4 @@
+import asyncio
 from flask import Flask, request, jsonify
 import threading
 from flask_cors import CORS
@@ -27,7 +28,7 @@ def record_audio(stop_flag):
     with sr.Microphone() as source:
         print("Recording...")
         while not stop_flag.is_set():
-            audio_data = recognizer.listen(source)
+            audio_data = recognizer.listen(source,5,300)
             try:
                 text = recognizer.recognize_google(audio_data)
                 print("Recognized Text:", text)
@@ -231,10 +232,10 @@ def run_async_task(stop_flag):
                 "Duration_of_symptoms_in_Days": "7",
                 "Nurse_Send_to": "3",
                 "Emergency_Security_Index_Trialge_Nurse": "4",
-                "Remarks_on_Nurse_Triage": "I was good anyways...",
+                "Remarks_on_Nurse_Triage": "...",
                 "Visitor_id_tag_provided": "1",
                 "Register_desk_activated": "0",
-                "Triage_nurse_Details": "Name - Maharani, Department - medical"
+                "Triage_nurse_Details": "Name - , Department - "
                 }
                 ```
             """+f"""
@@ -283,7 +284,7 @@ def run_async_task(stop_flag):
 
 # Inside the /start_recording endpoint
 @app.route('/start_recording', methods=['POST'])
-def start_recording():
+async def start_recording():
     global extracted_info
     global lock
     global stop_flag
@@ -297,13 +298,13 @@ def start_recording():
         extracted_info = {}  # Set to an empty dictionary
         stop_flag = threading.Event()  # Event to signal stop recording
         # Run the asynchronous task in a separate thread
-        threading.Thread(target=run_async_task, args=(stop_flag,)).start()
+        await asyncio.to_thread(run_async_task, stop_flag)
 
     return jsonify({'status': 'Recording and processing started'})
 
 # Define the /stop_recording endpoint
 @app.route('/stop_recording', methods=['GET'])
-def stop_recording():
+async def stop_recording():
     global extracted_info
     global stop_flag
     print("Recording stopped")
@@ -314,7 +315,7 @@ def stop_recording():
 
     # Poll until the Gemini API response is ready
     while 'gemini_response' not in extracted_info:
-        time.sleep(1)
+        await asyncio.sleep(1)
 
     # Check if the response is in text format
     if isinstance(extracted_info['gemini_response'], str):
