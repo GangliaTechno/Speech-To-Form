@@ -121,9 +121,9 @@ const TriageForm = () => {
   };
 
   return (
-    <div>
-      <div className="border-b-4 h-auto pb-4">
-        <div className="block sm:flex md:flex xl:flex justify-start max-w-md pl-6 space-x-12 pt-8 ">
+    <div className="block items-center justify-center h-screen p-8 ">
+    <div className="border-2 border-cyan-700 pt-3 pb-4 rounded-3xl shadow-lg shadow-sky-900 " style={{ background: 'linear-gradient(to right, rgb(127, 161, 255,0.7), rgb(176, 195, 250,0.7))' }}>
+    <div className="  flex justify-center   space-x-12 pt-8 ">
           <div className="button flex  pt-4 text-sm font-bold self-center pl-9">
             <button className="w-56 h-16 bg-blue-500 rounded-3xl">
               Create Unique Triage ID
@@ -172,9 +172,8 @@ const TriageForm = () => {
             <option value="other">Other</option>
           </select>
         </div>
-
         </div>
-        <div className=" inline-block sm:flex md:flex xl:flex justify-start max-w-md pl-14 space-x-12 pt-8 ">
+        <div className="  flex justify-center   space-x-12 pt-8 ">
           <div className="mb-4">
             <label htmlFor='namegivenatTriage' className="flex text-gray-700 text-sm font-bold mb-2 w-96">
               Name given at the Triage
@@ -220,13 +219,14 @@ const TriageForm = () => {
           <button id="startRecordingButton5" onClick={() => handleStartRecording(5)} className="w-40 h-14 bg-blue-500 rounded-2xl mr-4">
             Start Recording
           </button>
-          <button id="stopRecordingButton5" onClick={() => handleStopRecording(5)} className="w-40 h-14 bg-orange-400 rounded-2xl">
+          <button id="stopRecordingButton5" onClick={() => handleStopRecording(5)} className="w-40 h-14  bg-cyan-500 rounded-2xl">
           Stop Recording
         </button>
         </div>
       </div>
-      <div className="border-b-4 h-auto pb-4">
-        <div className="block sm:flex md:flex xl:flex justify-start max-w-md pl-6 space-x-12 pt-8 ml-9">
+      <div className="block items-center justify-center h-auto pt-9 ">
+      <div className="border-2 border-cyan-700 pt-3 pb-4 rounded-3xl shadow-lg shadow-sky-900 " style={{ background: 'linear-gradient(to right, rgb(127, 161, 255,0.7), rgb(176, 195, 250,0.7))' }}>
+    <div className="  flex justify-center   space-x-12 pt-8 ">
           <div className="mb-4 ">
             <label htmlFor='triage_date' className=" text-gray-700 text-sm font-bold mb-2 w-36  sm:w-56  sm:flex">
               Triage Date
@@ -281,7 +281,7 @@ const TriageForm = () => {
           </select>
           </div>
         </div>
-        <div className=" inline-block sm:flex md:flex xl:flex justify-start max-w-md pl-14 space-x-12 pt-8 ">
+        <div className="  flex justify-center   space-x-12 pt-8 ">
           
           <div className="mb-4">
           <label htmlFor="emergencySecurityIndex" className="flex text-gray-700 text-sm font-bold mb-2 w-96">
@@ -329,10 +329,7 @@ const TriageForm = () => {
             <option value="no">No</option>  
             </select>     
            </div>
-        </div>
-
-        <div className=" inline-block sm:flex md:flex xl:flex justify-start  pl-14 space-x-12 pt-8 ">
-          <div className="mb-4">
+           <div className="mb-4">
             <label htmlFor='triageNurseDetails' className="flex text-gray-700 text-sm font-bold mb-2">
               Triage nurse Details
             </label>
@@ -344,19 +341,21 @@ const TriageForm = () => {
   <button id="startRecordingButton5" onClick={() => handleStartRecording(6)} className="w-40 h-14 bg-blue-500 rounded-2xl mr-4">
     Start Recording
   </button>
-  <button id="stopRecordingButton5" onClick={() => handleStopRecording(6)} className="w-40 h-14 bg-orange-400 rounded-2xl">
+  <button id="stopRecordingButton5" onClick={() => handleStopRecording(6)} className="w-40 h-14  bg-cyan-500 rounded-2xl">
     Stop Recording
   </button>
 </div>
 
       </div>
+      </div>
 
-      <div className="border-b-4 h-auto pb-4">
+      <div className="block items-center justify-center h-auto pt-9 pb-4 ">
+    <div className="border-2 border-cyan-700 pt-3 pb-4 rounded-3xl shadow-lg shadow-sky-900 " style={{ background: 'linear-gradient(to right, rgb(127, 161, 255,0.7), rgb(176, 195, 250,0.7))' }}>
         <h1 class=" text-gray-700 text-1xl pt-6 font-bold underline  font-serif">
           {" "}
           Physical Triage
         </h1>
-        <div className="block sm:flex md:flex xl:flex justify-start max-w-md pl-6 space-x-12 pt-8 ml-9">
+        <div className="  flex justify-center   space-x-12 pt-8 ">
         <div className="mb-4 ">
             <label htmlFor='physicalDate' className=" text-gray-700 text-sm font-bold mb-2 w-36  sm:w-56  sm:flex">
              Physical Triage Date
@@ -421,7 +420,7 @@ const TriageForm = () => {
           </select>
         </div>
         </div>
-        <div className=" inline-block sm:flex md:flex xl:flex justify-start max-w-md pl-14 space-x-12 pt-8  ">
+        <div className="  flex justify-center   space-x-12 pt-8 ">
         <div className="mb-4">
           <label htmlFor="emergencySecurityIndexPhysician" className="flex text-gray-700 text-sm font-bold mb-2 w-96">
           Emergency severity index physician Triage code:Emergency Physician
@@ -478,12 +477,13 @@ const TriageForm = () => {
   <button id="startRecordingButton5" onClick={() => handleStartRecording(7)} className="w-40 h-14 bg-blue-500 rounded-2xl mr-4">
     Start Recording
   </button>
-  <button id="stopRecordingButton5" onClick={() => handleStopRecording(7)} className="w-40 h-14 bg-orange-400 rounded-2xl">
+  <button id="stopRecordingButton5" onClick={() => handleStopRecording(7)} className="w-40 h-14  bg-cyan-500 rounded-2xl">
     Stop Recording
   </button>
 </div>
 
       </div>
+    </div>
     </div>
   );
 };

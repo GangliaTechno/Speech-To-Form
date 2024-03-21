@@ -3,5 +3,6 @@
 @tailwind utilities;
 
  body{
-  background-color: rgb(185, 185, 185);
+  background-image: url('../src/assets/bg2.webp');
+  background-size: cover;
 }

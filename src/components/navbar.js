@@ -2,7 +2,7 @@ import React from "react";
 
 const Navbar = () => {
   return (
-    <nav className=" bg-gray-800 py-8">
+    <nav className=" py-8"style ={{background:'linear-gradient(to bottom,#4b6cb7,#182848)'}}>
       <div className="container mx-auto  justify-center md:justify-center  font-bold ">
         <div className="text-white font-bold text-lg "></div>
         <ul className="block sm:flex  md:flex  xl:flex space-x-8  ">
