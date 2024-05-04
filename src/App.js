@@ -4,6 +4,7 @@ import Navbar from "./components/navbar";
 import TransferinForm from "./components/transferin";
 import AirwayAssesment from "./components/airwayasses";
 import Treatrment from "./components/treatment";
+import BreathingVentilationAssesment from "./components/breathingandventilation";
 
 function App() {
   return (
@@ -15,10 +16,11 @@ function App() {
           Nurse Triage{" "}
         </h1> */}
       </div>
-      {/* <TriageForm/> */}
+      <TriageForm/>
       {/* <TransferinForm/> */}
       {/* <AirwayAssesment/> */}
-      <Treatrment/>
+      {/* <Treatrment/> */}
+      {/* <BreathingVentilationAssesment/> */}
     </div>
   );
 }

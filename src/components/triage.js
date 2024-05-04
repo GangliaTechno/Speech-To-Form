@@ -1,6 +1,4 @@
 import React,{useState} from 'react';
-
-
 const TriageForm = () => {
   // let stopRecording = false;
 
@@ -26,7 +24,7 @@ const TriageForm = () => {
       const geminiResponse = data.gemini_response;
       if (geminiResponse) {
 
-        if(section_stop===5){
+        if(section_stop===1){
 
           const triageid_html = document.getElementById('triageid');
           const namegivenatTriage_html = document.getElementById('namegivenatTriage');
@@ -47,7 +45,7 @@ const TriageForm = () => {
           address_html.value = geminiResponse["Address"];
           gender_html.selectedIndex = parseInt(geminiResponse["Gender"])+1;
       }
-      else if (section_stop===6){
+      else if (section_stop===2){
         const triage_date_html = document.getElementById('triage_date');
         const triageTime_html = document.getElementById('triageTime');
         const chiefCompliant_html = document.getElementById('chiefCompliant');
@@ -70,7 +68,7 @@ const TriageForm = () => {
         registrationDesk_html.selectedIndex = parseInt(geminiResponse["Register_desk_activated"])+1;
         triageNurseDetails_html.value = geminiResponse["Triage_nurse_Details"];
       }
-       else if(section_stop===7){
+       else if(section_stop===3){
         const physicalDate_html = document.getElementById('physicalDate');
         const Physicaltime_html = document.getElementById('Physicaltime');
         const emergencyPhysicianTriage_html = document.getElementById('emergencyPhysicianTriage');
@@ -216,10 +214,10 @@ const TriageForm = () => {
           </div>
         </div>
         <div className="button flex justify-center  pt-2 text-sm font-bold  pl-9 ">
-          <button id="startRecordingButton5" onClick={() => handleStartRecording(5)} className="w-40 h-14 bg-blue-500 rounded-2xl mr-4">
+          <button id="startRecordingButton5" onClick={() => handleStartRecording(1)} className="w-40 h-14 bg-blue-500 rounded-2xl mr-4">
             Start Recording
           </button>
-          <button id="stopRecordingButton5" onClick={() => handleStopRecording(5)} className="w-40 h-14  bg-cyan-500 rounded-2xl">
+          <button id="stopRecordingButton5" onClick={() => handleStopRecording(1)} className="w-40 h-14  bg-cyan-500 rounded-2xl">
           Stop Recording
         </button>
         </div>
@@ -338,10 +336,10 @@ const TriageForm = () => {
           </div>
         </div>
         <div className="button flex justify-center pt-2 text-sm font-bold pl-9">
-  <button id="startRecordingButton5" onClick={() => handleStartRecording(6)} className="w-40 h-14 bg-blue-500 rounded-2xl mr-4">
+  <button id="startRecordingButton5" onClick={() => handleStartRecording(2)} className="w-40 h-14 bg-blue-500 rounded-2xl mr-4">
     Start Recording
   </button>
-  <button id="stopRecordingButton5" onClick={() => handleStopRecording(6)} className="w-40 h-14  bg-cyan-500 rounded-2xl">
+  <button id="stopRecordingButton5" onClick={() => handleStopRecording(2)} className="w-40 h-14  bg-cyan-500 rounded-2xl">
     Stop Recording
   </button>
 </div>
@@ -474,10 +472,10 @@ const TriageForm = () => {
         </div>
 
         <div className="button flex justify-center pt-2 text-sm font-bold pl-9">
-  <button id="startRecordingButton5" onClick={() => handleStartRecording(7)} className="w-40 h-14 bg-blue-500 rounded-2xl mr-4">
+  <button id="startRecordingButton5" onClick={() => handleStartRecording(3)} className="w-40 h-14 bg-blue-500 rounded-2xl mr-4">
     Start Recording
   </button>
-  <button id="stopRecordingButton5" onClick={() => handleStopRecording(7)} className="w-40 h-14  bg-cyan-500 rounded-2xl">
+  <button id="stopRecordingButton5" onClick={() => handleStopRecording(3)} className="w-40 h-14  bg-cyan-500 rounded-2xl">
     Stop Recording
   </button>
 </div>

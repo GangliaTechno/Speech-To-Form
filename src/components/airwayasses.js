@@ -1,77 +1,101 @@
-import React from "react";
+import React, {useState} from "react";
 
 const AirwayAssesment = () => {
-  let stopRecording = false;
-  const handleStartRecording = (section) => {
+  const [stopRecording, setStopRecording] = useState(false);
+
+  const handleStartRecording = async (section) => {
     // Set the section property
-    console.log("Section:", section);
+    console.log('Section:', section);
 
     // Call the function to send data to backend
-    sendDataToBackend(section);
+    await sendDataToBackend(section);
   };
 
-  const handleStopRecording = () => {
-    fetch("http://localhost:5000/stop_recording", {
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Received response from backend:", data);
-        stopRecording = true;
-        console.log("received response from stop recodirng");
+  const handleStopRecording = async (section_stop) => {
+    setStopRecording(true);
+    try{
+      const response = await fetch('http://localhost:5000/stop_recording');
+      const data = await response.json();
+      console.log("Received response from backend:", data);
+      console.log("Received response from stop recording");
+  
+      const geminiResponse = data.gemini_response;
+      if (geminiResponse) {
 
-        const geminiResponse = data.gemini_response;
-        if (geminiResponse) {
-          const triageid_html = document.getElementById("triageid");
-          const namegivenatTriage_html =
-            document.getElementById("namegivenatTriage");
-          const massCasualtySelect_html =
-            document.getElementById("massCasualtySelect");
-          const no_of_patients_html = document.getElementById("no_of_patients");
-          const age_html = document.getElementById("age");
-          const maritialStatus_html = document.getElementById("maritialStatus");
-          const address_html = document.getElementById("address");
-          const gender_html = document.getElementById("gender");
+        if(section_stop===9){
+          let Anticipated_Difficulty_html = document.getElementById('Anticipated_Difficulty');
+          let Current_Trauma_Related_Automatical_Difficulty_html = document.getElementById('Current_Trauma_Related_Automatical_Difficulty')
+          let LEMON_Assesment_Restricted_Neck_Mobiltity_html = document.getElementById('LEMON_Assesment_Restricted_Neck_Mobiltity');
+          let LEMON_Assesment_Obstruction_html = document.getElementById('LEMON_Assesment_Obstruction');
+          let LEMON_Assesment_Mallampatti_html = document.getElementById('LEMON_Assesment_Mallampatti');
+          let LEMON_Assesment_Evluvate_html = document.getElementById('LEMON_Assesment_Evluvate');
+          let LEMON_Assesment_Lock_html = document.getElementById('LEMON_Assesment_Lock');
+          let PsychologicalDifficultAirway_html = document.getElementById('PsychologicalDifficultAirway');
+          let difficultAirway_html = document.getElementById('difficultAirway');
+          let airwayAssesment_html = document.getElementById('airwayAssesment');
 
-          triageid_html.value = geminiResponse["Triage_Id"];
-          namegivenatTriage_html.value =
-            geminiResponse["Name_given_at_the_Triage"];
-          massCasualtySelect_html.selectedIndex =
-            parseInt(
-              geminiResponse["Is_the_patient_a_victim_of_mass_casualty"]
-            ) + 1;
-          no_of_patients_html.value = parseInt(
-            geminiResponse["Number_of_patients_affected_in_the_same_incident"]
-          );
-          age_html.value = parseInt(geminiResponse["Age"]);
-          maritialStatus_html.selectedIndex =
-            parseInt(geminiResponse["Maritial_Status"]) + 1;
-          address_html.value = geminiResponse["Address"];
-          gender_html.selectedIndex = parseInt(geminiResponse["Gender"]) + 1;
-        } else {
-          console.log("Not received the response");
+          Anticipated_Difficulty_html.selectedIndex = parseInt(geminiResponse["Anticipated_Difficulty"])+1;
+          Current_Trauma_Related_Automatical_Difficulty_html.selectedIndex = parseInt(geminiResponse["Current_Trauma_Related_Automatical_Difficulty"])+1;
+          LEMON_Assesment_Restricted_Neck_Mobiltity_html.selectedIndex = parseInt(geminiResponse["LEMON_Assesment_Restricted_Neck_Mobiltity"])+1;
+          LEMON_Assesment_Obstruction_html.selectedIndex = parseInt(geminiResponse["LEMON_Assesment_Obstruction"])+1;
+          LEMON_Assesment_Mallampatti_html.selectedIndex = parseInt(geminiResponse["LEMON_Assesment_Mallampatti"])+1;
+          LEMON_Assesment_Evluvate_html.selectedIndex = parseInt(geminiResponse["LEMON_Assesment_Evluvate"])+1;
+          LEMON_Assesment_Lock_html.selectedIndex = parseInt(geminiResponse["LEMON_Assesment_Lock"])+1;
+          PsychologicalDifficultAirway_html.selectedIndex = parseInt(geminiResponse["Psychological_Difficult_Airway"])+1;
+          difficultAirway_html.selectedIndex = parseInt(geminiResponse["Difficult_Airway"])+1;
+          airwayAssesment_html.selectedIndex = parseInt(geminiResponse["Airway_Assesment"])+1;
+        } else if(section_stop===10){
+
+          let ServicalMotionRestriction_html = document.getElementById('ServicalMotionRestriction');
+          let IsThisACrashAirwayManagement_html = document.getElementById('IsThisACrashAirwayManagement');
+          let AirwayManagement_html = document.getElementById('AirwayManagement');
+          let OralSuction_html = document.getElementById('OralSuction');
+          let OPASize_html = document.getElementById('OPASize');
+          let NPASize_html = document.getElementById('NPASize');
+          let SupragloticAirwayType_html = document.getElementById('SupragloticAirwayType');
+          let SupergloticAirwaySize_html = document.getElementById('SupergloticAirwaySize');
+          let NumberOfSupergloticAiwayAttempts_html = document.getElementById('NumberOfSupergloticAiwayAttempts');
+          let SupergloticAirwayDifficulty_html = document.getElementById('SupergloticAirwayDifficulty');
+          let ModeOfIntubation_html = document.getElementById('ModeOfIntubation');
+          let NumberOfAttemptsOfLaryngoscopy_html = document.getElementById('NumberOfAttemptsOfLaryngoscopy');
+          let ETTubeSize_html = document.getElementById('ETTubeSize');
+          let TubeCuff_html = document.getElementById('TubeCuff');
+          let TypeOfETTube_html = document.getElementById('TypeOfETTube');
+          let TypeOfDifficultyEncountered_html = document.getElementById('TypeOfDifficultyEncountered');
+          let EnrollTheCaseInAirwayManagementRegistry_html = document.getElementById('EnrollTheCaseInAirwayManagementRegistry');
+
+
+
+
+
         }
-      })
-      .catch((error) => console.error("Error stopping recording:", error));
-  };
+      
+      }
+      else {
+        console.log("Not received the response");
+      }
+    }catch(error){
+      console.log(error);
+    }
+    };
 
-  const sendDataToBackend = (section) => {
-    // Send data to backend
-    fetch("http://localhost:5000/start_recording", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ additional_variable: section }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
 
-        stopRecording = false;
-      })
-      .catch((error) => console.error("Error starting recording:", error));
-  };
+  const sendDataToBackend = async (section) => {
+        try {
+          const response = await fetch('http://localhost:5000/start_recording', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ additional_variable: section })
+          });
+          const data = await response.json();
+          console.log(data);
+          stopRecording = false;
+        } catch (error) {
+          console.error('Error starting recording:', error);
+        }
+      };
 
   return (
     // <div>
@@ -85,14 +109,13 @@ const AirwayAssesment = () => {
         
         
           <div className="mb-4">
-            <label
-              htmlFor="airwayassesment"
+            <label htmlFor="airwayAssesment"
               className="flex text-gray-700 text-sm font-bold mb-2 w-72"
             >
         Airway Assesment
             </label>
             <select
-              id="airwayassesment"
+              id="airwayAssesment"
               className="block appearance-none w-72 bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none"
             >
               <option value="selectoption">Select Option</option>
@@ -107,13 +130,13 @@ const AirwayAssesment = () => {
           </div>
           <div className="mb-4">
             <label
-              htmlFor="difficultairway"
+              htmlFor="difficultAirway"
               className="flex text-gray-700 text-sm font-bold mb-2 w-72"
             >
          Difficult Airway
             </label>
             <select
-              id="difficultairway"
+              id="difficultAirway"
               className="block appearance-none w-72 bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none"
             >
               <option value="selectoption">Select Option</option>
@@ -125,13 +148,13 @@ const AirwayAssesment = () => {
           </div>
           <div className="mb-4">
             <label
-              htmlFor="difficultairway"
+              htmlFor="PsychologicalDifficultAirway"
               className="flex text-gray-700 text-sm font-bold mb-2 w-72"
             >
          Psychological Airway Difficulty     
             </label>
             <select
-              id="difficultairway"
+              id="PsychologicalDifficultAirway"
               className="block appearance-none w-72 bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none"
             >
               <option value="selectoption">Select Option</option>
@@ -144,13 +167,13 @@ const AirwayAssesment = () => {
           </div>  
           <div className="mb-4">
             <label
-              htmlFor="clinicalcondition"
+              htmlFor="LEMON_Assesment_Lock"
               className="flex text-gray-700 text-sm font-bold mb-2 w-80"
             >
               LEMON Assesment:Lock
             </label>
             <select
-              id="clinicalcondition"
+              id="LEMON_Assesment_Lock"
               className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none"
             >
               <option value="selectoption">Select Option</option>
@@ -166,13 +189,13 @@ const AirwayAssesment = () => {
        
           <div className="mb-4">
             <label
-              htmlFor="lemonassesment:evaluvte"
+              htmlFor="LEMON_Assesment_Evluvate"
               className="flex text-gray-700 text-sm font-bold mb-2 w-96"
             >
               LEMON Assesment:Evluvate
             </label>
             <select
-              id="lemonassesment:evaluvte"
+              id="LEMON_Assesment_Evluvate"
               className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none"
             >
               <option value="selectoption">Select Option</option>
@@ -183,13 +206,13 @@ const AirwayAssesment = () => {
           </div>
           <div className="mb-4">
             <label
-              htmlFor="clinicalcondition"
+              htmlFor="LEMON_Assesment_Mallampatti"
               className="flex text-gray-700 text-sm font-bold mb-2 w-80"
             >
               LEMON Assesment:Mallampatti
             </label>
             <select
-              id="clinicalcondition"
+              id="LEMON_Assesment_Mallampatti"
               className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none"
             >
               <option value="selectoption">Select Option</option>
@@ -201,13 +224,13 @@ const AirwayAssesment = () => {
           </div>
           <div className="mb-4">
             <label
-              htmlFor="lemonassesmentobstruction"
+              htmlFor="LEMON_Assesment_Obstruction"
               className="flex text-gray-700 text-sm font-bold mb-2 w-80"
             >
               LEMON Assesment:Obstruction
             </label>
             <select
-              id="lemonassesmentobstruction"
+              id="LEMON_Assesment_Obstruction"
               className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none"
             >
               <option value="selectoption">Select Option</option>
@@ -221,13 +244,13 @@ const AirwayAssesment = () => {
         <div className="  flex justify-center   space-x-12 pt-8 ">
         <div className="mb-4">
             <label
-              htmlFor="restricteneckmobiltiy"
+              htmlFor="LEMON_Assesment_Restricted_Neck_Mobiltity"
               className="flex text-gray-700 text-sm font-bold mb-2 w-96"
             >
               LEMON Assesment:Restricted Neck Mobiltity
             </label>
             <select
-              id="restricteneckmobiltiy"
+              id="LEMON_Assesment_Restricted_Neck_Mobiltity"
               className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none"
             >
               <option value="selectoption">Select Option</option>
@@ -238,23 +261,19 @@ const AirwayAssesment = () => {
           </div>
           <div className="mb-4">
             <label
-              htmlFor="traumarelatedautomaticaldifficulty"
+              htmlFor="Current_Trauma_Related_Automatical_Difficulty"
               className="flex text-gray-700 text-sm font-bold mb-2 w-max pt-0"
             >
               Current Trauma Related Automatical Difficulty
             </label>
             <select
-              id="traumarelatedautomaticaldifficulty"
+              id="Current_Trauma_Related_Automatical_Difficulty"
               className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none"
             >
               <option value="selectoption">Select Option</option>
               <option value="Teeth Loss">Teeth Loss</option>
-              <option value="Oral Injury">
-                Oral Injury
-              </option>
-              <option value=" Maxillary Injury">
-                Maxillary Injury
-              </option>
+              <option value="Oral Injury"> Oral Injury</option>
+              <option value=" Maxillary Injury">Maxillary Injury</option>
               <option value="Mandible Fracturee">Mandible Fracture</option>
                <option value="Tongue Swelling/Hematoma">Tongue Swelling/Hematoma</option>
                 <option value="Tongue Injury">Tongue Injury</option>
@@ -262,18 +281,17 @@ const AirwayAssesment = () => {
           </div>
           <div className="mb-4">
             <label
-              htmlFor="Maxillary Injury"
+              htmlFor="Anticipated_Difficulty"
               className="flex text-gray-700 text-sm font-bold mb-2 w-60 pt-0"
             >
              Anticipated Difficulty
             </label>
             <select
-              id="anticipateddifficulty"
+              id="Anticipated_Difficulty"
               className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none"
             >
               <option value="selectoption">Select Option</option>
                 <option value="Difficult Mask Ventilation">Difficult Mask Ventilation</option>
-              <option value="Difficult Intubation">Difficult Intubation</option>
               <option value="Difficult Intubation">Difficult Intubation</option>
               <option value="Difficult VideoLaryngoscopy">Difficult VideoLaryngoscopy</option>
               <option value="Difficult Fiber Optic Bronchoscopy">Difficult Fiber Optic Bronchoscopy</option>
@@ -283,8 +301,7 @@ const AirwayAssesment = () => {
           </div>
           <div className="button flex justify-center  pt-5  text-sm font-bold  ">
           <button
-            id="startRecordingButton5"
-            onClick={() => handleStartRecording(5)}
+            id=""
             className="w-60 h-14 bg-indigo-500 rounded-2xl mr-4 "
           >
             Call For Help
@@ -295,15 +312,15 @@ const AirwayAssesment = () => {
        
         <div className="button flex justify-center  pt-8 text-sm font-bold  pl-9 ">
           <button
-            id="startRecordingButton5"
-            onClick={() => handleStartRecording(5)}
+            id="startRecordingButton9"
+            onClick={() => handleStartRecording(9)}
             className="w-40 h-14 bg-blue-500 rounded-2xl mr-4"
           >
             Start Recording
           </button>
           <button
-            id="stopRecordingButton"
-            onClick={handleStopRecording}
+            id="stopRecordingButton9"
+            onClick={() => handleStopRecording(9)}
             className="w-40 h-14 bg-cyan-500 rounded-2xl"
           >
             Stop Recording
@@ -319,19 +336,19 @@ const AirwayAssesment = () => {
         <div className="  flex justify-center   space-x-12 pt-8 ">
         <div className="mb-4">
             <label
-              htmlFor="servicalmotionrestriction"
+              htmlFor="ServicalMotionRestriction"
               className="flex text-gray-700 text-sm font-bold mb-2 w-72"
             >
         Cervical Motion Restriction
             </label>
             <select
-              id="servicalmotionrestriction"
+              id="ServicalMotionRestriction"
               className="block appearance-none w-72 bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none"
             >
               <option value="selectoption">Select Option</option>
-              {/* <option value="Intubated">Intubated</option>
-              <option value="Non-Intubated">Non-Intubated</option>
-              <option value="Tacheostimied"> Tacheostimied </option>
+              <option value="Intubated">Yes</option>
+              <option value="Non-Intubated">No</option>
+              {/* <option value="Tacheostimied"> Tacheostimied </option>
               <option value="Patent">Patent</option>
               <option value="Obstructed">Obstructed</option>
               <option value="Threatened">Threatened</option>
@@ -340,13 +357,13 @@ const AirwayAssesment = () => {
           </div>
           <div className="mb-4">
             <label
-              htmlFor="isthisacrashairwaymanagement"
+              htmlFor="IsThisACrashAirwayManagement"
               className="flex text-gray-700 text-sm font-bold mb-2 w-72"
             >
         Is This a Crash Airway Management
             </label>
             <select
-              id="isthisacrashairwaymanagement"
+              id="IsThisACrashAirwayManagement"
               className="block appearance-none w-72 bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none"
             >
               <option value="selectoption">Select Option</option>
@@ -357,17 +374,17 @@ const AirwayAssesment = () => {
           </div>
           <div className="mb-4">
             <label
-              htmlFor="airwaymanagement"
+              htmlFor="AirwayManagement"
               className="flex text-gray-700 text-sm font-bold mb-2 w-72"
             >
         Aiway Management
             </label>
             <select
-              id="airwaymanagement"
+              id="AirwayManagement"
               className="block appearance-none w-72 bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none"
             >
               <option value="selectoption">Select Option</option>
-              <option value="Oral Suction">Oral Suction</option>
+              <option value="Oral Suction">ral SuctioOn</option>
               <option value="Head Tilt chin Lift">Head Tilt chin Lift</option>
               <option value="Jaw Thrust"> Jaw Thrust </option>
               <option value="Recovery Position">Recovery Position</option>
@@ -383,13 +400,13 @@ const AirwayAssesment = () => {
           </div>
           <div className="mb-4">
             <label
-              htmlFor="oralsuction"
+              htmlFor="OralSuction"
               className="flex text-gray-700 text-sm font-bold mb-2 w-72"
             >
         Oral Suction
             </label>
             <select
-              id="oralsuction"
+              id="OralSuction"
               className="block appearance-none w-72 bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none"
             >
               <option value="selectoption">Select Option</option>
@@ -402,13 +419,13 @@ const AirwayAssesment = () => {
           </div>
           <div className="mb-4">
             <label
-              htmlFor="opasize"
+              htmlFor="OPASize"
               className="flex text-gray-700 text-sm font-bold mb-2 w-44"
             >
         OPA size if used
             </label>
             <select
-              id="opasize"
+              id="OPASize"
               className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none"
             >
               <option value="selectoption">Select Option</option>
@@ -443,13 +460,13 @@ const AirwayAssesment = () => {
         <div className="  flex justify-center   space-x-12 pt-8 ">
         <div className="mb-4">
             <label
-              htmlFor="npasize"
+              htmlFor="NPASize"
               className="flex text-gray-700 text-sm font-bold mb-2 w-80"
             >
               NPA size if used
             </label>
             <select
-              id="npasize"
+              id="NPASize"
               className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none"
             >
              <option value="selectoption">Select Option</option>
@@ -464,13 +481,13 @@ const AirwayAssesment = () => {
 
           <div className="mb-4">
             <label
-              htmlFor="supragloticairwaytype"
+              htmlFor="SupragloticAirwayType"
               className="flex text-gray-700 text-sm font-bold mb-2 w-60"
             >
               Superglotic Airway Type
             </label>
             <select
-              id="supragloticairwaytype"
+              id="SupragloticAirwayType"
               className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none"
             >
               <option value="selectoption">Select Option</option>
@@ -486,13 +503,13 @@ const AirwayAssesment = () => {
           </div>
           <div className="mb-4">
             <label
-              htmlFor="supergloticairwaysize"
+              htmlFor="SupergloticAirwaySize"
               className="flex text-gray-700 text-sm font-bold mb-2 w-44"
             >
         Superglotuc airway size
             </label>
             <select
-              id="supergloticairwaysize"
+              id="SupergloticAirwaySize"
               className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none"
             >
               <option value="selectoption">Select Option</option>
@@ -509,25 +526,26 @@ const AirwayAssesment = () => {
           </div>
            <div className="mb-4">
             <label
-              htmlFor="actiontoken"
+              htmlFor="NumberOfSupergloticAiwayAttempts"
               className="flex text-gray-700 text-sm font-bold mb-2 w-72"
             >
               Number of Superglotic Aiway Attempts
             </label>
             <input
+            type="number"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="actiontoken"
+              id="NumberOfSupergloticAiwayAttempts"
             />
           </div>
           <div className="mb-4">
             <label
-              htmlFor="supergloticairwaydifficulty"
+              htmlFor="SupergloticAirwayDifficulty"
               className="flex text-gray-700 text-sm font-bold mb-2 w-80"
             >
               Superglotic Airway Difficulty
             </label>
             <select
-              id="supergloticairwaydifficulty"
+              id="SupergloticAirwayDifficulty"
               className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none"
             >
               <option value="selectoption">Select Option</option>
@@ -545,13 +563,13 @@ const AirwayAssesment = () => {
         <div className="  flex justify-center   space-x-12 pt-8 ">
         <div className="mb-4">
             <label
-              htmlFor="modeofintubation"
+              htmlFor="ModeOfIntubation"
               className="flex text-gray-700 text-sm font-bold mb-2 w-80"
             >
-              Mode Of intubation
+              Mode Of Intubation
             </label>
             <select
-              id="modeofintubation"
+              id="ModeOfIntubation"
               className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none"
             >
              <option value="selectoption">Select Option</option>
@@ -568,26 +586,27 @@ const AirwayAssesment = () => {
           </div>
           <div className="mb-4">
             <label
-              htmlFor="actiontoken"
+              htmlFor="NumberOfAttemptsOfLaryngoscopy"
               className="flex text-gray-700 text-sm font-bold mb-2 w-72"
             >
               Number of Attempts Of Laryngoscopy
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="actiontoken"
+              id="NumberOfAttemptsOfLaryngoscopy"
+              type="number"
             />
           </div>
          
           <div className="mb-4">
             <label
-              htmlFor="ettubesize"
+              htmlFor="ETTubeSize"
               className="flex text-gray-700 text-sm font-bold mb-2 w-60"
             >
         ET Tube size
             </label>
             <select
-              id="ettubesize"
+              id="ETTubeSize"
               className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none"
             >
               <option value="selectoption">Select Option</option>
@@ -608,13 +627,13 @@ const AirwayAssesment = () => {
           </div>
           <div className="mb-4">
             <label
-              htmlFor="tubecuff"
+              htmlFor="TubeCuff"
               className="flex text-gray-700 text-sm font-bold mb-2 w-60"
             >
         Tube Cuff
             </label>
             <select
-              id="tubecuff"
+              id="TubeCuff"
               className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none"
             >
               <option value="selectoption">Select Option</option>
@@ -624,13 +643,13 @@ const AirwayAssesment = () => {
           </div>
           <div className="mb-4">
             <label
-              htmlFor="tubecuff"
+              htmlFor="TypeOfETTube"
               className="flex text-gray-700 text-sm font-bold mb-2 w-60"
             >
-        Typr Of ET Tube
+        Type Of ET Tube
             </label>
             <select
-              id="tubecuff"
+              id="TypeOfETTube"
               className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none"
             >
               <option value="selectoption">Select Option</option>
@@ -640,24 +659,22 @@ const AirwayAssesment = () => {
               <option value="Double Lumen Tube">Double Lumen Tube</option>     
             </select>
           </div>
-          
-         
+
         </div>  
         <div className="  flex justify-center   space-x-12 pt-8 ">
         <div className="mb-4">
             <label
-              htmlFor="typeofdifficultyencountered"
+              htmlFor="TypeOfDifficultyEncountered"
               className="flex text-gray-700 text-sm font-bold mb-2 w-96"
             >
               Type Of Difficulty Encountered
             </label>
             <select
-              id="typeofdifficultyencountered"
+              id="TypeOfDifficultyEncountered"
               className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none"
             >
               <option value="selectoption">Select Option</option>
               <option value="Difficult Mask Ventilation">Difficult Mask Ventilation</option>
-              <option value="Difficult Intubation">Difficult Intubation</option>
               <option value="Difficult Intubation">Difficult Intubation</option>
               <option value="Difficult VideoLaryngoscopy">Difficult VideoLaryngoscopy</option>
               <option value="Difficult Fiber Optic Bronchoscopy">Difficult Fiber Optic Bronchoscopy</option>
@@ -667,31 +684,29 @@ const AirwayAssesment = () => {
          
          <div className="mb-4">
             <label
-              htmlFor="actiontoken"
+              htmlFor="EnrollTheCaseInAirwayManagementRegistry"
               className="flex text-gray-700 text-sm font-bold mb-2 w-80"
             >
               Enroll The Case In Airway Management Registry
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="actiontoken"
+              id="EnrollTheCaseInAirwayManagementRegistry"
             />
           </div>
-        
-
         </div>
        
         <div className="button flex justify-center  pt-8 text-sm font-bold  pl-9 ">
           <button
-            id="startRecordingButton5"
-            onClick={() => handleStartRecording(5)}
+            id="startRecordingButton10"
+            onClick={() => handleStartRecording(10)}
             className="w-40 h-14   bg-blue-500 rounded-2xl mr-4"
           >
             Start Recording
           </button>
           <button
-            id="stopRecordingButton"
-            onClick={handleStopRecording}
+            id="stopRecordingButton10"
+            onClick={() => handleStopRecording(10)}
             className="w-40 h-14 bg-cyan-500 rounded-2xl"
           >
             Stop Recording
