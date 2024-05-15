@@ -16,8 +16,8 @@ function App() {
           Nurse Triage{" "}
         </h1> */}
       </div>
-      <TriageForm/>
-      {/* <TransferinForm/> */}
+      {/* <TriageForm/> */}
+      <TransferinForm/>
       {/* <AirwayAssesment/> */}
       {/* <Treatrment/> */}
       {/* <BreathingVentilationAssesment/> */}

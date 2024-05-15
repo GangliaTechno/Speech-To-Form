@@ -103,7 +103,7 @@ const AirwayAssesment = () => {
     <div className="border-2 border-cyan-700 pt-3 pb-4 rounded-3xl shadow-lg shadow-sky-900 " style={{ background: 'linear-gradient(to right, rgb(127, 161, 255,0.7), rgb(176, 195, 250,0.7))' }}>
         <h1 class="text-1xl pt-6 font-bold underline font-serif">
           {" "}
-          AIRWAY ASSESMENT{" "}
+          AIRWAY ASSESSMENT{" "}
         </h1>
         <div className="  flex justify-center   space-x-12 pt-8 ">
         
@@ -112,7 +112,7 @@ const AirwayAssesment = () => {
             <label htmlFor="airwayAssesment"
               className="flex text-gray-700 text-sm font-bold mb-2 w-72"
             >
-        Airway Assesment
+        Airway Assessment
             </label>
             <select
               id="airwayAssesment"

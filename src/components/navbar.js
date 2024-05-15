@@ -8,7 +8,7 @@ const Navbar = () => {
         <ul className="block sm:flex  md:flex  xl:flex space-x-8  ">
           <li className="my-4 sm:my-0">
             <a href="#" className="text-white">
-              Transfer in
+              Transfer In
             </a>
           </li>
           <li  className="my-4 sm:my-0">
