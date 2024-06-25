@@ -666,6 +666,7 @@ async def stop_recording():
     global extracted_info
     global stop_flag
     print("Recording stopped")
+    print('hi')
    
 
     # Set the stop flag to stop recording
